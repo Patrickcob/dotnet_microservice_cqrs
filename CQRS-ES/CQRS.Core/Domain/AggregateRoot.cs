@@ -11,7 +11,7 @@ namespace CQRS.Core.Domain
         protected Guid _id;
         private readonly List<BaseEvent> _changes = new();
 
-        public Guid id
+        public Guid Id
         {
             get { return _id; }
         }
