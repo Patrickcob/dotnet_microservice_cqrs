@@ -1,6 +1,6 @@
 using CQRS.CORE.Commands;
 
-namespace Post.Cmd.Api.Commands
+namespace Post.CMD.Api.Commands
 {
     public class NewPostCommand: BaseCommand
     {
