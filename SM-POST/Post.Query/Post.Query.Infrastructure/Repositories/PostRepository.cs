@@ -10,7 +10,7 @@ using Post.Query.Infrastructure.DataAccess;
 
 namespace Post.Query.Infrastructure.Repositories
 {
-    public class PostRepository : IPostRepositories
+    public class PostRepository : IPostRepository
     {
         private readonly DatabaseContextFactory _databaseContextFactory;
 

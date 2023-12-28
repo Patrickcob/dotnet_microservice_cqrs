@@ -6,7 +6,7 @@ using Post.CMD.Domain.Entities;
 
 namespace Post.Query.Domain.Repositories
 {
-    public interface IPostRepositories
+    public interface IPostRepository
     {
         Task CreateAsync(PostEntity post);
         Task UpdateAsync(PostEntity post);
