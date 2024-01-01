@@ -1,3 +1,5 @@
+[![.NET](https://github.com/Patrickcob/dotnet_microservice_cqrs/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Patrickcob/dotnet_microservice_cqrs/actions/workflows/dotnet.yml)
+
 # Social Media Microservices with CQRS
 
 This project is a tentative exploration of microservices architecture and Command Query Responsibility Segregation (CQRS) implemented in C# using .NET Core 6.0. The goal of this project is to gain a better understanding of microservices and CQRS concepts by building a social media website.
