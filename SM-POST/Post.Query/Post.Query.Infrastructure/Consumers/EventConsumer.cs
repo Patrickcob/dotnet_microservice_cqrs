@@ -29,34 +29,42 @@ namespace Post.Query.Infrastructure.Consumers
                 .SetKeyDeserializer(Deserializers.Utf8)
                 .SetValueDeserializer(Deserializers.Utf8)
                 .Build();
-            
+
             consumer.Subscribe(topic);
 
             while (true)
             {
-                var consumerResult = consumer.Consume();
-
-                if (consumerResult?.Message == null)
+                try
                 {
-                    continue;
+                    var consumeResult = consumer.Consume();
+
+                    if (consumeResult?.Message == null)
+                    {
+                        continue;
+                    }
+
+                    var options = new JsonSerializerOptions
+                    {
+                        Converters = { new EventJsonConverter() }
+                    };
+
+                    var @event = JsonSerializer.Deserialize<BaseEvent>(consumeResult.Message.Value, options);
+
+                    var handlerMethod = _eventHandler.GetType().GetMethod("On", new Type[] { @event.GetType() });
+
+                    if (handlerMethod == null)
+                    {
+                        throw new ArgumentNullException($"Handler method for event {nameof(handlerMethod)} not found");
+                    }
+
+                    handlerMethod.Invoke(_eventHandler, new object[] { @event });
+                    consumer.Commit();
                 }
-
-                var options = new JsonSerializerOptions
+                catch (ConsumeException e)
                 {
-                    Converters = { new EventJsonConverter() }
-                };
-
-                var @event = JsonSerializer.Deserialize<BaseEvent>(consumerResult.Message.Value, options);
-
-                var handlerMethod = _eventHandler.GetType().GetMethod("On", new Type[] { @event.GetType() });
-
-                if (handlerMethod == null)
-                {
-                    throw new ArgumentNullException($"Handler method for event {nameof(handlerMethod)} not found");
+                    // Log the error and decide whether to continue or not
+                    Console.WriteLine($"Error consuming message: {e.Error.Reason}");
                 }
-
-                handlerMethod.Invoke(_eventHandler, new object[] { @event });
-                consumer.Commit();
             }
         }
     }

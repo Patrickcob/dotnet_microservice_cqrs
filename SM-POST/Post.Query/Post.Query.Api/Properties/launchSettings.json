@@ -1,4 +1,5 @@
 ﻿{
+  "KAFKA_TOPIC": "SocialMediaPostEvents",
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
