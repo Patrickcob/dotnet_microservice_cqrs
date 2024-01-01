@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Post.CMD.Domain.Entities
 {
-    [Table("Post")]
+    [Table("Post", Schema = "dbo")]
     public class PostEntity
     {
         [Key]
